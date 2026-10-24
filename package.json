@@ -4,10 +4,12 @@
   "description": "Deliberately buggy checkout domain for an AI debugging assistant POC.",
   "type": "module",
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "repro:legacy": "tsx src/reproduceLegacyBug.ts"
   },
   "license": "MIT",
   "devDependencies": {
+    "tsx": "^4.19.2",
     "typescript": "^5.6.3",
     "vitest": "^2.1.4"
   }

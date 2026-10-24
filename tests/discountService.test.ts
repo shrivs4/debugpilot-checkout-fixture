@@ -3,10 +3,20 @@ import { calculateDiscount } from '../src/checkout/discountService';
 
 describe('calculateDiscount', () => {
   it('applies a percentage discount', () => {
-    expect(calculateDiscount(100, { code: 'SAVE10', percentOff: 10 })).toBe(10);
+    expect(
+      calculateDiscount(100, { code: 'SAVE10', discountType: 'PERCENTAGE', amount: 10 }),
+    ).toBe(10);
   });
 
-  it('scales with the subtotal', () => {
-    expect(calculateDiscount(200, { code: 'SAVE25', percentOff: 25 })).toBe(50);
+  it('applies a fixed discount', () => {
+    expect(
+      calculateDiscount(100, { code: 'FLAT15', discountType: 'FIXED', amount: 15 }),
+    ).toBe(15);
+  });
+
+  it('never discounts more than the subtotal for fixed coupons', () => {
+    expect(
+      calculateDiscount(10, { code: 'FLAT15', discountType: 'FIXED', amount: 15 }),
+    ).toBe(10);
   });
 });
