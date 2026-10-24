@@ -1,0 +1,14 @@
+{
+  "name": "checkout-debug-poc",
+  "version": "1.0.0",
+  "description": "Deliberately buggy checkout domain for an AI debugging assistant POC.",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  }
+}
