@@ -14,8 +14,17 @@ export function createOrder(): Order {
   return { id, items: [] };
 }
 
+/**
+ * Add a product to the order. Each SKU appears on at most one line item, so
+ * adding a product that is already in the order updates its existing line.
+ */
 export function addItem(order: Order, product: Product, quantity: number): Order {
-  order.items.push({ product, quantity });
+  const existing = order.items.find((item) => item.product.sku === product.sku);
+  if (existing) {
+    existing.quantity = quantity;
+  } else {
+    order.items.push({ product, quantity });
+  }
   logger.info('Added item to order', { orderId: order.id, sku: product.sku, quantity });
   return order;
 }

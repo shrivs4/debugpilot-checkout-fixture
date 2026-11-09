@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "repro:legacy": "tsx src/reproduceLegacyBug.ts"
+    "repro:legacy": "tsx src/reproduceLegacyBug.ts",
+    "repro:scenario": "tsx src/reproduceScenarioBug.ts"
   },
   "license": "MIT",
   "devDependencies": {
