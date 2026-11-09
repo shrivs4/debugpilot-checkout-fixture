@@ -9,8 +9,9 @@
  *
  * Run with:  npm run repro:legacy
  *
- * Expected result: an uncaught TypeError whose stack trace points at
- * src/checkout/discountService.ts (calculateDiscount).
+ * Originally this crashed with a TypeError in calculateDiscount. Legacy coupons
+ * are now treated as percentage coupons, so the script checks the expected
+ * totals and exits non-zero if they are wrong.
  */
 import { Coupon } from './types/models';
 import { addCoupon } from './coupons/couponRepository';
@@ -30,7 +31,11 @@ const order = createOrder();
 addItem(order, { sku: 'A1', name: 'Widget', unitPrice: 100 }, 1);
 applyCoupon(order, 'LEGACY20');
 
-// Throws: Cannot read properties of undefined (reading 'toUpperCase')
 const result = checkout(order);
 
 logger.info('Checkout result', { result });
+
+if (result.discount !== 20 || result.total !== 80) {
+  logger.error('Legacy coupon produced unexpected totals', { result, expectedDiscount: 20, expectedTotal: 80 });
+  process.exit(1);
+}

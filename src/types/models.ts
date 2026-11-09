@@ -30,9 +30,10 @@ export interface Coupon {
   code: string;
   /**
    * Discount type. Every coupon written *after* the migration carries this.
-   * Coupons created before the migration ("legacy" coupons) do not.
+   * Coupons created before the migration ("legacy" coupons) do not; they were
+   * all percentage coupons, so a missing type is treated as PERCENTAGE.
    */
-  discountType: DiscountType;
+  discountType?: DiscountType;
   /**
    * For PERCENTAGE coupons this is a percentage (10 => 10% off).
    * For FIXED coupons this is an absolute amount off the subtotal.

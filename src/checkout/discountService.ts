@@ -6,14 +6,13 @@ import { logger } from '../logger';
  *
  * Coupons can be either PERCENTAGE or FIXED. The discount type was introduced
  * in the October 2026 migration; every coupon written after the migration
- * carries a `discountType`.
+ * carries a `discountType`. Legacy coupons predate the field and were always
+ * percentage-off, so they default to PERCENTAGE.
  */
 export function calculateDiscount(subtotal: number, coupon: Coupon): number {
   logger.info('Calculating discount', { code: coupon.code, subtotal });
 
-  // NOTE: this assumes every coupon has a discountType. Coupons created before
-  // the migration do not, so this line throws for legacy data.
-  const normalizedType = coupon.discountType.toUpperCase();
+  const normalizedType = (coupon.discountType ?? 'PERCENTAGE').toUpperCase();
 
   let discount: number;
   if (normalizedType === 'PERCENTAGE') {
