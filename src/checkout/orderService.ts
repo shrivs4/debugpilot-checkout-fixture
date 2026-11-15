@@ -25,7 +25,7 @@ export function addItem(
 ): Order {
   const existing = order.items.find((item) => item.product.sku === product.sku);
   if (existing) {
-    existing.quantity += quantity;
+    existing.quantity = quantity;
   } else {
     order.items.push({ product, quantity });
   }
